@@ -7,7 +7,7 @@ When evaluating your response to the challenge, we will look at:
 
 1. how you have solved the tasks
 2. how you structure your code
-3. which solutions you have chosen to solve the different tasks
+3. which solutions you have chosen to solve the different task
 4. We will also appreciate seeing examples on how you would ensure that your code works as intended
 5. Ideally, you will use Typescript and NestJS framework
    Be creative and feel free to extend the tasks with additional functions, for example for sorting, filtering or searching in data.
