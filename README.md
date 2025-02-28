@@ -15,13 +15,13 @@ If more time was available I might use a database here
 
 For a testing strategy, I would consider the following:
 
-#### Expand unit tests. Mock up more data where it's easy to predict what is supposed to happen, and set up tests based on that. E.g. several transactions from the same user with round numbers, and expected output for the user's balance and his/her aggregated totals (total spent, total earned etc.). Also this avoids rate limits from a real Transaction API and ensures predictable results.
+- Expand unit tests. Mock up more data where it's easy to predict what is supposed to happen, and set up tests based on that. E.g. several transactions from the same user with round numbers, and expected output for the user's balance and his/her aggregated totals (total spent, total earned etc.). Also this avoids rate limits from a real Transaction API and ensures predictable results.
 
-#### Integration Tests: verify actual service calls
+- Integration Tests: verify actual service calls
 
-#### E2E tests: e.g. "localhost:3000/aggregated/677166" and verify the data for user with that Id
+- E2E tests: e.g. "localhost:3000/aggregated/677166" and verify the data for user with that Id
 
-#### Performance tests: make sure we can handle high request volumes, consider off the shelf solutions to benchmark API performance
+- Performance tests: make sure we can handle high request volumes, consider off the shelf solutions to benchmark API performance
 
 #### TDD approach:
 
