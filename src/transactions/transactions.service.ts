@@ -13,7 +13,6 @@ export class TransactionsService {
   }
 
   getAggregatedData(userId: string) {
-    console.log('getting aggregated data for user', userId);
     const transactions = this.transactions.filter((tx) => tx.userId === userId);
 
     let balance = 0;
