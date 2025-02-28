@@ -1,30 +1,22 @@
-import { Injectable } from '@nestjs/common';
-
-enum TransactionType {
-  EARNED = 'earned',
-  SPENT = 'spent',
-  PAYOUT = 'payout',
-}
-
+import { Injectable, Logger } from '@nestjs/common';
+import * as fs from 'fs';
+import * as path from 'path';
+import { ITransaction } from '../common/itransaction';
+import { TransactionType } from '../common/transactiontype';
 @Injectable()
 export class TransactionsService {
-  private mockTransactions = [
-    { id: '1', userId: '123', type: TransactionType.EARNED, amount: 100 },
-    { id: '2', userId: '123', type: TransactionType.SPENT, amount: 50 },
-    { id: '3', userId: '123', type: TransactionType.PAYOUT, amount: 30 },
-  ];
+  private readonly logger = new Logger('TRANSACTIONS LOGGER');
+  private transactions: ITransaction[] = [];
+
+  constructor() {
+    this.loadTransactions();
+  }
 
   getAggregatedData(userId: string) {
-    const transactions = this.mockTransactions.filter(
-      (tx) => tx.userId === userId,
-    );
+    console.log('getting aggregated data for user', userId);
+    const transactions = this.transactions.filter((tx) => tx.userId === userId);
 
-    const balance = transactions.reduce((acc, tx) => {
-      if (tx.type === 'earned') return acc + tx.amount;
-      if (tx.type === 'spent') return acc - tx.amount;
-      return acc;
-    }, 0);
-
+    let balance = 0;
     let earned = 0;
     let spent = 0;
     let payout = 0;
@@ -33,9 +25,11 @@ export class TransactionsService {
       switch (tx.type) {
         case TransactionType.EARNED:
           earned += tx.amount;
+          balance += tx.amount;
           break;
         case TransactionType.SPENT:
           spent += tx.amount;
+          balance -= tx.amount;
           break;
         case TransactionType.PAYOUT:
           payout += tx.amount;
@@ -51,5 +45,19 @@ export class TransactionsService {
       payout,
       paidOut: 0,
     };
+  }
+
+  private loadTransactions() {
+    this.logger.log('Loading transactions from file...');
+
+    const filePath = path.join(__dirname, '../../data/transactions.json');
+    const rawData = fs.readFileSync(filePath, 'utf8');
+    const { items } = JSON.parse(rawData);
+
+    items.forEach((tx: ITransaction) => {
+      this.transactions.push(tx);
+    });
+
+    this.logger.log(`Loaded ${items.length} transactions.`);
   }
 }
