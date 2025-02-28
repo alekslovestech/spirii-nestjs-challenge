@@ -1,3 +1,5 @@
+import { TransactionType } from './transactiontype';
+
 export interface ITransaction {
   transactionId: string;
   userId: string;

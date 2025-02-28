@@ -43,7 +43,6 @@ export class TransactionsService {
       earned,
       spent,
       payout,
-      paidOut: 0,
     };
   }
 
